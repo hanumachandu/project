@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.min.js"></script>
+<script>
+	var app=angular.module('app',[]);
+
+	//controller file
+	app.controller('my_controller',function($scope,$rootScope){
+		$scope.clickme=function(myText){
+			$rootScope.$broadcast("child_one",{"key1":myText});
+			$rootScope.$broadcast("child_two",{"key1":myText});
+		}
+
+	});
+
+	//child_one controller
+	app.controller('child_one',function($scope,$rootScope){
+		$rootScope.$on('child_one',function(event,response){
+			$scope.var_one=response.key1;
+		})
+	});
+
+	//child_two controller
+	//child_one controller
+	app.controller('child_two',function($scope,$rootScope){
+		$rootScope.$on('child_two',function(event,response){
+			$scope.var_two=response.key1;
+		})
+	})
+</script>
+
+</head>
+<body>
+<div ng-controller="my_controller">
+<input type="text" ng-model="myText" placeholder="Enter AnyText" />
+<input type="button" value="clickme" ng-click="clickme(myText)">
+	<div ng-controller="child_one">
+		{{var_one}}
+	</div>
+	<div ng-controller="child_two">
+		{{var_two}}
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+</head>
+<body>
+<div id="divResult"></div>
+       <input type="button" id="btn1" 
+                      onclick="startWebWorker()" value="start_WebWorker">
+        <input type="button" id="btn2" 
+                      onclick="stopWebWorker()" value="stop_WebWorker">
+</body>
+<script>
+var w;
+function startWebWorker(){
+   if(typeof(Worker)!='undefined'){
+        if(typeof(w)=='undefined'){
+	w=new Worker('........js');
+           }
+           w.onmessage=function(event){
+docuent.getElementById('divResult').innerHTML=event.data;
+};
+}
+else{
+document.getElementById('divResult')
+		.innerHTML="your browser not support";
+}
+function stopWebWorker(){
+w.terminate();
+w=undefined;
+}
+</script>
+</html>
